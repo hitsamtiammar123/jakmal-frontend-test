@@ -79,7 +79,7 @@ function App() {
             <Flex key={index} direction="row" alignItems="center" marginRight="21px">
               <Flex minWidth="192px" alignItems="center" direction="row" flex="1">
                 <Circle active>{index + 1}</Circle>
-                <Text marginLeft="10px" color="#FF8A00" size="16px">
+                <Text marginLeft="10px" color="#FF8A00" fontSize="16px">
                   {step.name}
                 </Text>
               </Flex>

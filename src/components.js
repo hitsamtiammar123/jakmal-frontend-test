@@ -2,10 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 
 export const Base = styled.div`
+  margin: ${(props) => props.margin};
   margin-left: ${(props) => props.marginLeft};
   margin-right: ${(props) => props.marginRight};
   margin-top: ${(props) => props.marginTop};
   margin-bottom: ${(props) => props.marginBottom};
+  padding: ${(props) => props.padding};
   padding-left: ${(props) => props.paddingLeft};
   padding-right: ${(props) => props.paddingRight};
   padding-top: ${(props) => props.paddingTop};
@@ -26,7 +28,7 @@ export const Base = styled.div`
 export const Flex = styled(Base)`
   display: flex;
   flex-direction: ${(props) => props.direction || 'column'};
-  justify-content: ${(props) => props.justifyContent || 'start'};
+  justify-content: ${(props) => props.justifyContent || 'flex-start'};
   align-items: ${(props) => props.alignItems || 'stretch'};
   flex: ${(props) => props.flex};
 `;
@@ -43,7 +45,7 @@ export const Icon = styled(({ className, children, name, ...props }) => (
 
 export const Text = styled.span`
   color: ${(props) => props.color};
-  font-size: ${(props) => props.size};
+  font-size: ${(props) => props.fontSize};
   margin-left: ${(props) => props.marginLeft};
   margin-right: ${(props) => props.marginRight};
   margin-top: ${(props) => props.marginTop};

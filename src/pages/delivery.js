@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Flex, Text } from 'src/components';
-import { CheckBox } from 'src/inputs';
+import { CheckBox, InputText as BaseInputText } from 'src/inputs';
 
 const Title = styled(Text).attrs({
   fontWeight: 'bold',
   color: '#FF8A00',
-  size: '26px',
+  fontSize: '26px',
 })``;
+
+const InputText = styled(BaseInputText)`
+  margin-bottom: 10px;
+`;
 
 export default function Delivery() {
   const [isDropship, setIsDropship] = useState(true);
@@ -23,7 +27,17 @@ export default function Delivery() {
             text="Send as Dropshipper"
           />
         </Flex>
-        <Flex direction="row"></Flex>
+        <Flex marginTop="36px" direction="row">
+          <Flex flex="2" marginRight="40px">
+            <InputText value="" placeholder="Email" />
+            <InputText type="success" value="" placeholder="Phone Number" />
+            <InputText textarea value="" placeholder="Delivery Address" />
+          </Flex>
+          <Flex flex="1" marginRight="40px">
+            <InputText value="" placeholder="Dropshipper name" />
+            <InputText type="error" value="" placeholder="Dropshipper phone number" />
+          </Flex>
+        </Flex>
       </Flex>
       <Flex borderLeft="1px solid #FF8A00" paddingLeft="19px" flex="1">
         <Title>Summary</Title>

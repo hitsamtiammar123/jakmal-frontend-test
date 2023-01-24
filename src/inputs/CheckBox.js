@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Flex, Text, Icon } from './components';
+import { Flex, Text, Icon } from 'src/components';
 
 const CheckBoxElem = styled.div`
   width: ${(props) => props.size || '20px'};
@@ -15,7 +15,7 @@ const Container = styled(Flex)`
   cursor: pointer;
 `;
 
-export const CheckBox = function ({ checked, color, size, borderWidth, text, onClick }) {
+export default function ({ checked, color, size, borderWidth, text, onClick }) {
   return (
     <Container onClick={onClick} alignItems="center" direction="row">
       <CheckBoxElem color={color} size={size} borderWidth={borderWidth}>
@@ -26,4 +26,4 @@ export const CheckBox = function ({ checked, color, size, borderWidth, text, onC
       </Text>
     </Container>
   );
-};
+}
