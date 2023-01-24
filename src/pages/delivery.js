@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Flex, Text } from 'src/components';
 import { CheckBox, InputText as BaseInputText } from 'src/inputs';
+import { Summary } from 'src/shared';
 
 const Title = styled(Text).attrs({
   fontWeight: 'bold',
@@ -15,6 +16,7 @@ const InputText = styled(BaseInputText)`
 
 export default function Delivery() {
   const [isDropship, setIsDropship] = useState(true);
+
   return (
     <Flex flex="1" marginBottom="20px" direction="row">
       <Flex marginRight="30px" flex="2">
@@ -31,7 +33,7 @@ export default function Delivery() {
           <Flex flex="2" marginRight="40px">
             <InputText value="" placeholder="Email" />
             <InputText type="success" value="" placeholder="Phone Number" />
-            <InputText textarea value="" placeholder="Delivery Address" />
+            <InputText minHeight="120px" textarea value="" placeholder="Delivery Address" />
           </Flex>
           <Flex flex="1" marginRight="40px">
             <InputText value="" placeholder="Dropshipper name" />
@@ -39,9 +41,7 @@ export default function Delivery() {
           </Flex>
         </Flex>
       </Flex>
-      <Flex borderLeft="1px solid #FF8A00" paddingLeft="19px" flex="1">
-        <Title>Summary</Title>
-      </Flex>
+      <Summary />
     </Flex>
   );
 }

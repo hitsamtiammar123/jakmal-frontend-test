@@ -40,6 +40,10 @@ const InputPlaceholder = styled(Text)`
   }
 `;
 
+const Container = styled(Flex)`
+  font-family: 'Inter';
+`;
+
 const REGISTERED_INPUTS = [];
 
 export default function ({ type, placeholder, onChange, value, textarea, ...props }) {
@@ -65,7 +69,6 @@ export default function ({ type, placeholder, onChange, value, textarea, ...prop
       inputIndex.current = REGISTERED_INPUTS.length;
       input.current.toogleFocusOut = toogleFocusOut;
       REGISTERED_INPUTS.push(input.current);
-      console.log({ REGISTERED_INPUTS });
     }
 
     return () => {
@@ -112,7 +115,7 @@ export default function ({ type, placeholder, onChange, value, textarea, ...prop
   }
 
   return (
-    <Flex
+    <Container
       minHeight="40px"
       padding="15px 12px 0px"
       direction="row"
@@ -138,6 +141,6 @@ export default function ({ type, placeholder, onChange, value, textarea, ...prop
         )}
       </Flex>
       {isFocused && getIcon()}
-    </Flex>
+    </Container>
   );
 }
