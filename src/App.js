@@ -1,11 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Flex, Icon, Text } from './components';
+import { Routes, Route, Navigate, BrowserRouter } from 'react-router-dom';
+import { Delivery } from './pages';
 import './App.css';
 
-const Container = styled.div`
+const Container = styled(Flex)`
   margin: 55px 50px;
   background-color: white;
+  min-height: 400px;
 `;
 
 const Header = styled(Flex).attrs({
@@ -14,7 +17,7 @@ const Header = styled(Flex).attrs({
 })`
   font-family: 'Inter', sans-serif;
   width: 100%;
-  padding: 30px 40px;
+  padding: 30px 40px 0px;
 `;
 
 const HeaderTab = styled(Flex).attrs((props) => ({
@@ -22,17 +25,19 @@ const HeaderTab = styled(Flex).attrs((props) => ({
   ...props,
 }))`
   width: ${(props) => props.width};
-  height: 100%;
 `;
 
 const SecondTab = styled(HeaderTab).attrs({
   alignItems: 'center',
 })`
   background-color: #fffae6;
-  height: 70px;
+  && {
+    height: 70px;
+  }
   border-radius: 35px;
-  transform: translateY(-45px);
+  transform: translateY(-60px);
   padding: 0px 38px;
+  position: absolute;
 `;
 
 const Circle = styled(Flex).attrs({
@@ -53,32 +58,26 @@ const STEPS = [
   { name: 'Finish', href: '#' },
 ];
 
+const Body = styled(Flex)`
+  margin-left: 40px;
+  margin-top: 37px;
+  flex: 1;
+`;
+
 function App() {
   function renderHeader() {
     return (
       <Header>
         <HeaderTab flex="1">
           <Flex direction="row">
-            <Icon name="arrow-back-outline" />
-            <Text marginLeft="10px" size="14px">
-              Back to cart
-            </Text>
+            <Icon size="18px" name="arrow-back-outline" />
+            <Text marginLeft="10px">Back to cart</Text>
           </Flex>
         </HeaderTab>
         <SecondTab justifyContent="space-between" flex="1">
           {STEPS.map((step, index) => (
-            <Flex
-              key={index}
-              direction="row"
-              alignItems="center"
-              marginRight="21px"
-            >
-              <Flex
-                minWidth="192px"
-                alignItems="center"
-                direction="row"
-                flex="1"
-              >
+            <Flex key={index} direction="row" alignItems="center" marginRight="21px">
+              <Flex minWidth="192px" alignItems="center" direction="row" flex="1">
                 <Circle active>{index + 1}</Circle>
                 <Text marginLeft="10px" color="#FF8A00" size="16px">
                   {step.name}
@@ -95,7 +94,19 @@ function App() {
     );
   }
 
-  return <Container>{renderHeader()}</Container>;
+  return (
+    <Container>
+      {renderHeader()}
+      <Body>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/delivery" element={<Delivery />}></Route>
+            <Route path="*" element={<Navigate replace to="/delivery" />} />
+          </Routes>
+        </BrowserRouter>
+      </Body>
+    </Container>
+  );
 }
 
 export default App;

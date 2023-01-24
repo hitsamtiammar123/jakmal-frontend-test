@@ -6,11 +6,21 @@ export const Base = styled.div`
   margin-right: ${(props) => props.marginRight};
   margin-top: ${(props) => props.marginTop};
   margin-bottom: ${(props) => props.marginBottom};
+  padding-left: ${(props) => props.paddingLeft};
+  padding-right: ${(props) => props.paddingRight};
+  padding-top: ${(props) => props.paddingTop};
+  padding-bottom: ${(props) => props.paddingBottom};
   width: ${(props) => props.width};
   min-width: ${(props) => props.minWidth};
   height: ${(props) => props.height};
   min-height: ${(props) => props.minHeight};
   cursor: ${(props) => props.cursor};
+  border: ${(props) => props.border};
+  border-left: ${(props) => props.borderLeft};
+  border-right: ${(props) => props.borderRight};
+  border-top: ${(props) => props.borderTop};
+  border-bottom: ${(props) => props.borderBottom};
+  border-color: ${(props) => props.borderColor};
 `;
 
 export const Flex = styled(Base)`
@@ -22,13 +32,14 @@ export const Flex = styled(Base)`
 `;
 
 export const Icon = styled(({ className, children, name, ...props }) => (
-  <ion-icon className={className} name={name} style={{ color: props.color }}>
+  <ion-icon
+    className={className}
+    name={name}
+    style={{ color: props.color, width: props.size || '18px', height: props.size || '18px' }}
+  >
     {children}
   </ion-icon>
-))`
-  width: 18px;
-  height: 18px;
-`;
+))``;
 
 export const Text = styled.span`
   color: ${(props) => props.color};
@@ -37,4 +48,5 @@ export const Text = styled.span`
   margin-right: ${(props) => props.marginRight};
   margin-top: ${(props) => props.marginTop};
   margin-bottom: ${(props) => props.marginBottom};
+  font-weight: ${(props) => props.fontWeight};
 `;
