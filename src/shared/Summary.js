@@ -74,13 +74,14 @@ const MainButton = styled.button`
   font-size: 18px;
   -webkit-transition: all 0.4s;
   transition: all 0.4s;
+  cursor: pointer;
 
   &:hover {
     background-color: #faae55;
   }
 `;
 
-export default function Summary() {
+export default function Summary({ buttonText, onBtnClick, displayButton }) {
   function renderSummaryDetailRow(title, content) {
     return (
       <>
@@ -133,7 +134,7 @@ export default function Summary() {
             <Title>505,900</Title>
           </Flex>
         </TextContainer>
-        <MainButton>Continue to Payment</MainButton>
+        {displayButton && <MainButton onClick={onBtnClick}>{buttonText || 'Continue'}</MainButton>}
       </Flex>
     </Container>
   );

@@ -1,25 +1,21 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Flex, Text } from 'src/components';
+import { useNavigate } from 'react-router-dom';
+import { Flex, Title, MainContent } from 'src/components';
 import { CheckBox, InputText as BaseInputText } from 'src/inputs';
-import { Summary } from 'src/shared';
-
-const Title = styled(Text).attrs({
-  fontWeight: 'bold',
-  color: '#FF8A00',
-  fontSize: '26px',
-})``;
+import { Summary, MainContainer } from 'src/shared';
 
 const InputText = styled(BaseInputText)`
   margin-bottom: 10px;
 `;
 
 export default function Delivery() {
+  const navigate = useNavigate();
   const [isDropship, setIsDropship] = useState(true);
 
   return (
-    <Flex flex="1" marginBottom="20px" direction="row">
-      <Flex marginRight="30px" flex="2">
+    <MainContainer backButtonText="Back to cart" activeIndex={1}>
+      <MainContent>
         <Flex direction="row" justifyContent="space-between">
           <Title>Delivery details</Title>
           <CheckBox
@@ -40,8 +36,12 @@ export default function Delivery() {
             <InputText type="error" value="" placeholder="Dropshipper phone number" />
           </Flex>
         </Flex>
-      </Flex>
-      <Summary />
-    </Flex>
+      </MainContent>
+      <Summary
+        onBtnClick={() => navigate('/payment')}
+        displayButton
+        buttonText="Continue to payment"
+      />
+    </MainContainer>
   );
 }

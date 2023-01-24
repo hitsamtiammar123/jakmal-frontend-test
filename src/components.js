@@ -51,4 +51,21 @@ export const Text = styled.span`
   margin-top: ${(props) => props.marginTop};
   margin-bottom: ${(props) => props.marginBottom};
   font-weight: ${(props) => props.fontWeight};
+  text-align: ${(props) => props.textAlign};
 `;
+
+export const Title = styled(Text).attrs({
+  fontWeight: 'bold',
+  color: '#FF8A00',
+  fontSize: '26px',
+})``;
+
+export const MainContainer = styled(Flex).attrs({
+  flex: '1',
+  marginBottom: '20px',
+})``;
+
+export const MainContent = styled(Flex).attrs({
+  marginRight: '20px',
+  flex: '2',
+})``;

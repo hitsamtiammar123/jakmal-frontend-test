@@ -1,6 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Flex, Icon, Text } from 'src/components';
+import BackButtonContainer from './BackButtonContainer';
 
 const Header = styled(Flex).attrs({
   direction: 'row',
@@ -38,38 +40,34 @@ const Circle = styled(Flex).attrs({
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  color: ${(props) => (props.active ? 'white' : '#FF8A00')};
-  opacity: ${(props) => (props.active ? '1' : '0.2')};
-  background-color: #ff8a00;
+  color: ${(props) => (props.active ? 'white' : '#ff8a00')};
+  background-color: ${(props) => (props.active ? 'rgba(255, 138,0, 1)' : 'rgba(255, 138, 0, 0.2)')};
 `;
 
 const STEPS = [
-  { name: 'Delivery', href: '#' },
-  { name: 'Payment', href: '#' },
-  { name: 'Finish', href: '#' },
+  { name: 'Delivery', href: '/delivery' },
+  { name: 'Payment', href: '/payment' },
+  { name: 'Finish', href: '/finish' },
 ];
 
-export default function MainHeader() {
+export default function MainHeader({ activeIndex, backButtonText, displayBackButton }) {
   return (
     <Header>
       <HeaderTab flex="1">
-        <Flex direction="row">
-          <Icon size="18px" name="arrow-back-outline" />
-          <Text marginLeft="10px">Back to cart</Text>
-        </Flex>
+        {displayBackButton && <BackButtonContainer backButtonText={backButtonText} />}
       </HeaderTab>
       <SecondTab justifyContent="space-between" flex="1">
         {STEPS.map((step, index) => (
           <Flex key={index} direction="row" alignItems="center" marginRight="21px">
             <Flex minWidth="192px" alignItems="center" direction="row" flex="1">
-              <Circle active>{index + 1}</Circle>
+              <Circle active={index < activeIndex}>{index + 1}</Circle>
               <Text marginLeft="10px" color="#FF8A00" fontSize="16px">
                 {step.name}
               </Text>
             </Flex>
-            <a href={step.href}>
+            <span>
               <Icon color="#FF8A00" name="chevron-forward-outline" />
-            </a>
+            </span>
           </Flex>
         ))}
       </SecondTab>
@@ -77,3 +75,15 @@ export default function MainHeader() {
     </Header>
   );
 }
+
+MainHeader.defaultProps = {
+  activeIndex: -1,
+  backButtonText: 'Back',
+  displayBackButton: true,
+};
+
+MainHeader.propTypes = {
+  activeIndex: PropTypes.number,
+  backButtonText: PropTypes.string,
+  displayBackButton: PropTypes.bool,
+};
