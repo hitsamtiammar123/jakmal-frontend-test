@@ -19,7 +19,7 @@
       "prettier"
   ],
   "rules": {
-      "no-undef":"off",
+      "no-undef":"error",
       "eqeqeq":"error",
       "react/display-name": "off",
       "prettier/prettier": [

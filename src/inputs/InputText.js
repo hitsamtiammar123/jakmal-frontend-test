@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled, { css } from 'styled-components';
+import { Controller, useForm } from 'react-hook-form';
 import { Flex, Text, Icon } from 'src/components';
 
 const inputStyle = css`
@@ -46,10 +47,22 @@ const Container = styled(Flex)`
 
 const REGISTERED_INPUTS = [];
 
-export default function ({ type, placeholder, onChange, value, textarea, ...props }) {
+export default function ({
+  type,
+  placeholder,
+  textarea,
+  rules,
+  control,
+  name,
+  onChange,
+  ...props
+}) {
   const [isFocused, setIsFocused] = useState(false);
   const input = useRef();
   const inputIndex = useRef(-1);
+  const value = control._defaultValues[name];
+
+  //console.log({ control });
 
   function getBorder() {
     switch (type) {
@@ -62,13 +75,13 @@ export default function ({ type, placeholder, onChange, value, textarea, ...prop
   }
 
   useEffect(() => {
-    if (value) {
-      onFocus();
-    }
     if (input.current) {
       inputIndex.current = REGISTERED_INPUTS.length;
       input.current.toogleFocusOut = toogleFocusOut;
       REGISTERED_INPUTS.push(input.current);
+    }
+    if (value) {
+      onFocus();
     }
 
     return () => {
@@ -79,7 +92,8 @@ export default function ({ type, placeholder, onChange, value, textarea, ...prop
   function clearFocusOtherElements() {
     for (let i = 0; i < REGISTERED_INPUTS.length; i++) {
       const elem = REGISTERED_INPUTS[i];
-      if (i !== inputIndex.current) {
+      const value = control._formValues[elem.name];
+      if (i !== inputIndex.current && !value) {
         elem.toogleFocusOut();
       }
     }
@@ -94,6 +108,7 @@ export default function ({ type, placeholder, onChange, value, textarea, ...prop
   }
 
   function onBlur() {
+    const value = control._formValues[name];
     if (!value) {
       setIsFocused(false);
       clearFocusOtherElements();
@@ -129,15 +144,49 @@ export default function ({ type, placeholder, onChange, value, textarea, ...prop
           {placeholder}
         </InputPlaceholder>
         {textarea ? (
-          <TextArea
-            ref={input}
-            onChange={onChange}
-            value={value}
-            onBlur={onBlur}
-            onFocus={onFocus}
+          <Controller
+            control={control}
+            name={name}
+            rules={rules}
+            render={(props) => {
+              const { field } = props;
+              return (
+                <TextArea
+                  {...field}
+                  value={field.value}
+                  ref={input}
+                  onChange={(e) => {
+                    field.onChange(e);
+                    typeof onChange === 'function' && onChange(e, name);
+                  }}
+                  onBlur={onBlur}
+                  onFocus={onFocus}
+                />
+              );
+            }}
           />
         ) : (
-          <Input ref={input} onChange={onChange} value={value} onBlur={onBlur} onFocus={onFocus} />
+          <Controller
+            control={control}
+            name={name}
+            rules={rules}
+            render={(props) => {
+              const { field } = props;
+              return (
+                <Input
+                  {...field}
+                  onChange={(e) => {
+                    field.onChange(e);
+                    typeof onChange === 'function' && onChange(e, name);
+                  }}
+                  value={field.value}
+                  ref={input}
+                  onBlur={onBlur}
+                  onFocus={onFocus}
+                />
+              );
+            }}
+          />
         )}
       </Flex>
       {isFocused && getIcon()}
