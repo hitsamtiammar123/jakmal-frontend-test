@@ -8,11 +8,15 @@ const Container = styled(Flex)`
   cursor: pointer;
 `;
 
-export default function BackButtonContainer({ backButtonText, onBtnClick }) {
+export default function BackButtonContainer({ className, backButtonText, onBtnClick }) {
   const navigate = useNavigate();
 
   return (
-    <Container onClick={() => (onBtnClick ? onBtnClick() : navigate(-1))} direction="row">
+    <Container
+      className={className}
+      onClick={() => (onBtnClick ? onBtnClick() : navigate(-1))}
+      direction="row"
+    >
       <Icon size="18px" name="arrow-back-outline" />
       <Text marginLeft="10px">{backButtonText}</Text>
     </Container>

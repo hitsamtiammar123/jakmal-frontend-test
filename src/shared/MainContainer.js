@@ -1,13 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { MainContainer as BaseMainContainer, Flex } from 'src/components';
+import { MainContainer as _BaseMainContainer, Flex } from 'src/components';
 import { Header } from 'src/shared';
 
 const Body = styled(Flex)`
   margin-left: 40px;
   margin-top: 37px;
   flex-direction: row;
+  @media screen and (max-width: 1024px) {
+    flex-direction: column;
+  }
+  @media screen and (max-width: 425px) {
+    margin: 10px;
+  }
+`;
+
+const BaseMainContainer = styled(_BaseMainContainer)`
+  @media screen and (max-width: 1024px) {
+    flex-direction: column !important;
+  }
 `;
 
 export default function MainContainer({

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled, { css } from 'styled-components';
-import { Controller } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { Flex, Text, Icon } from 'src/components';
 
 const inputStyle = css`
@@ -80,6 +80,7 @@ export default function ({
       input.current.toogleFocusOut = toogleFocusOut;
       REGISTERED_INPUTS.push(input.current);
     }
+
     if (value) {
       onFocus();
     }
@@ -144,27 +145,29 @@ export default function ({
           {placeholder}
         </InputPlaceholder>
         {textarea ? (
-          <Controller
-            control={control}
-            name={name}
-            rules={rules}
-            render={(props) => {
-              const { field } = props;
-              return (
-                <TextArea
-                  {...field}
-                  value={field.value}
-                  ref={input}
-                  onChange={(e) => {
-                    field.onChange(e);
-                    typeof onChange === 'function' && onChange(e, name);
-                  }}
-                  onBlur={onBlur}
-                  onFocus={onFocus}
-                />
-              );
-            }}
-          />
+          <Flex>
+            <Controller
+              control={control}
+              name={name}
+              rules={rules}
+              render={(props) => {
+                const { field } = props;
+                return (
+                  <TextArea
+                    {...field}
+                    value={field.value}
+                    ref={input}
+                    onChange={(e) => {
+                      field.onChange(e);
+                      typeof onChange === 'function' && onChange(e, name);
+                    }}
+                    onBlur={onBlur}
+                    onFocus={onFocus}
+                  />
+                );
+              }}
+            />
+          </Flex>
         ) : (
           <Controller
             control={control}

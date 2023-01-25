@@ -7,8 +7,14 @@ import { formatNumber } from 'src/shared/utils';
 const Container = styled(Flex)`
   justify-content: space-between;
   border-left: 1px solid #ff8a00;
+  border-top: none;
   padding: 20px;
   flex: 1;
+
+  @media screen and (max-width: 1024px) {
+    border-left: none;
+    border-top: 1px solid #ff8a00;
+  }
 `;
 
 const Title = styled(Text).attrs({

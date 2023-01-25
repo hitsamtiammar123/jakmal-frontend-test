@@ -68,4 +68,8 @@ export const MainContainer = styled(Flex).attrs({
 export const MainContent = styled(Flex).attrs({
   marginRight: '20px',
   flex: '2',
-})``;
+})`
+  @media screen and (max-width: 1024px) {
+    flex: 1;
+  }
+`;

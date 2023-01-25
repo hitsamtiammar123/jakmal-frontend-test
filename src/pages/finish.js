@@ -4,9 +4,15 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Flex, Text, Title, MainContent as BaseMainContent } from 'src/components';
 import { Summary, MainContainer } from 'src/shared';
-import BackButtonContainer from 'src/shared/BackButtonContainer';
 import { actions } from 'src/redux/reducers/delivery';
 import { actions as paymentActions } from 'src/redux/reducers/payment';
+import BaseBackButtonContainer from 'src/shared/BackButtonContainer';
+
+const BackButtonContainer = styled(BaseBackButtonContainer)`
+  @media screen and (max-width: 1024px) {
+    margin-bottom: 30px;
+  }
+`;
 
 const MainContent = styled(BaseMainContent).attrs({
   justifyContent: 'center',
@@ -15,6 +21,12 @@ const MainContent = styled(BaseMainContent).attrs({
   font-family: 'Inter';
   color: black;
   font-size: 14px;
+
+  @media screen and (max-width: 1024px) {
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-left: 20px;
+  }
 `;
 
 export default function Delivery() {

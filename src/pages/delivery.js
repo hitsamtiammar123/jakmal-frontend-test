@@ -13,6 +13,33 @@ const InputText = styled(BaseInputText)`
   margin-bottom: 10px;
 `;
 
+const DeliveryHeading = styled(Flex)`
+  @media screen and (max-width: 425px) {
+    flex-direction: column;
+
+    ${Title} {
+      margin-bottom: 20px;
+    }
+
+    ${InputText} {
+      width: 100%;
+    }
+  }
+`;
+
+const InputMainContainer = styled(Flex)`
+  @media screen and (max-width: 425px) {
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+`;
+
+const InputContainer = styled(Flex)`
+  @media screen and (max-width: 425px) {
+    flex: 1;
+  }
+`;
+
 export default function Delivery() {
   const deliveryStates = useSelector((state) => state.delivery);
   const dispatch = useDispatch();
@@ -43,7 +70,7 @@ export default function Delivery() {
     <MainContainer backButtonText="Back to cart" activeIndex={1}>
       <MainContent>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Flex direction="row" justifyContent="space-between">
+          <DeliveryHeading direction="row" justifyContent="space-between">
             <Title>Delivery details</Title>
             <CheckBox
               checked={isDropship}
@@ -51,9 +78,9 @@ export default function Delivery() {
               color="#1BD97B"
               text="Send as Dropshipper"
             />
-          </Flex>
-          <Flex marginTop="36px" direction="row">
-            <Flex flex="2" marginRight="40px">
+          </DeliveryHeading>
+          <InputMainContainer marginTop="36px" direction="row">
+            <InputContainer flex="2" marginRight="40px">
               <InputText
                 control={control}
                 rules={{
@@ -92,8 +119,8 @@ export default function Delivery() {
                 name="address"
                 placeholder="Delivery Address"
               />
-            </Flex>
-            <Flex flex="1" marginRight="40px">
+            </InputContainer>
+            <InputContainer flex="1" marginRight="40px">
               <InputText
                 control={control}
                 name="dropshipperName"
@@ -110,8 +137,8 @@ export default function Delivery() {
                 }}
                 type={!errors.dropshipperPhoneNumber ? 'success' : 'error'}
               />
-            </Flex>
-          </Flex>
+            </InputContainer>
+          </InputMainContainer>
           <input ref={formRef} style={{ display: 'none' }} type="submit" />
         </form>
       </MainContent>

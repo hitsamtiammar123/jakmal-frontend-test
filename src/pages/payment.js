@@ -18,6 +18,9 @@ const ButtonContainer = styled(Flex).attrs({
   direction: 'row',
 })`
   margin-top: 30px;
+  @media screen and (max-width: 425px) {
+    flex-direction: column;
+  }
 `;
 
 export default function Payment() {
