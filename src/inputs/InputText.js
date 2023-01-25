@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled, { css } from 'styled-components';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
 import { Flex, Text, Icon } from 'src/components';
 
 const inputStyle = css`
@@ -60,9 +60,7 @@ export default function ({
   const [isFocused, setIsFocused] = useState(false);
   const input = useRef();
   const inputIndex = useRef(-1);
-  const value = control._defaultValues[name];
-
-  //console.log({ control });
+  const value = control._formValues[name];
 
   function getBorder() {
     switch (type) {
@@ -145,29 +143,27 @@ export default function ({
           {placeholder}
         </InputPlaceholder>
         {textarea ? (
-          <Flex>
-            <Controller
-              control={control}
-              name={name}
-              rules={rules}
-              render={(props) => {
-                const { field } = props;
-                return (
-                  <TextArea
-                    {...field}
-                    value={field.value}
-                    ref={input}
-                    onChange={(e) => {
-                      field.onChange(e);
-                      typeof onChange === 'function' && onChange(e, name);
-                    }}
-                    onBlur={onBlur}
-                    onFocus={onFocus}
-                  />
-                );
-              }}
-            />
-          </Flex>
+          <Controller
+            control={control}
+            name={name}
+            rules={rules}
+            render={(props) => {
+              const { field } = props;
+              return (
+                <TextArea
+                  {...field}
+                  value={field.value}
+                  ref={input}
+                  onChange={(e) => {
+                    field.onChange(e);
+                    typeof onChange === 'function' && onChange(e, name);
+                  }}
+                  onBlur={onBlur}
+                  onFocus={onFocus}
+                />
+              );
+            }}
+          />
         ) : (
           <Controller
             control={control}
