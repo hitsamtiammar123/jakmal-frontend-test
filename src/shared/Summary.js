@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
 import { Flex, Text } from 'src/components';
+import { formatNumber } from 'src/shared/utils';
 
 const Container = styled(Flex)`
   justify-content: space-between;
@@ -81,7 +83,14 @@ const MainButton = styled.button`
   }
 `;
 
-export default function Summary({ buttonText, onBtnClick, displayButton }) {
+export default function Summary({ buttonText, onBtnClick, displayButton, step }) {
+  const paymentStates = useSelector((state) => state.payment);
+  const deliveryStates = useSelector((state) => state.delivery);
+  const cartStates = useSelector((state) => state.cart);
+
+  const payment = paymentStates.payment;
+  const shipment = paymentStates.shipment;
+
   function renderSummaryDetailRow(title, content) {
     return (
       <>
@@ -107,31 +116,46 @@ export default function Summary({ buttonText, onBtnClick, displayButton }) {
     );
   }
 
+  function getDropshipFee() {
+    return deliveryStates.sendAsDropshipper ? 5900 : 0;
+  }
+
+  function getDeliveryEstimation() {
+    return `${shipment.estimate} by ${shipment.name}`;
+  }
+
+  function getTotal() {
+    console.log({ shipment, cartStates });
+    return cartStates.price + getDropshipFee() + shipment.price;
+  }
+
   return (
     <Container>
       <Flex>
         <Title>Summary</Title>
         <TextGrey opacity="0.6" marginTop="10px" marginBottom="22px" fontSize="14px">
-          10 items purchased
+          {cartStates.amount} items purchased
         </TextGrey>
-        {renderSummaryDetailRow('Delivery Estimation', 'today by GO-SEND')}
-        {renderSummaryDetailRow('Payment Method', 'Bank Transfer')}
+        {[3].includes(step) &&
+          renderSummaryDetailRow('Delivery Estimation', getDeliveryEstimation())}
+        {[3].includes(step) && renderSummaryDetailRow('Payment Method', payment.name)}
       </Flex>
       <Flex>
-        {renderDetailRow('Cost of goods', '$500,000')}
-        {renderDetailRow('Dropshipping Fee', '$500,000')}
-        {renderDetailRow(
-          <span>
-            <Text fontWeight="bold">Go Send</Text> Shipment
-          </span>,
-          '$500,000'
-        )}
+        {renderDetailRow('Cost of goods', formatNumber(cartStates.price))}
+        {renderDetailRow('Dropshipping Fee', formatNumber(getDropshipFee()))}
+        {[3].includes(step) &&
+          renderDetailRow(
+            <span>
+              <Text fontWeight="bold">{shipment.name}</Text> Shipment
+            </span>,
+            formatNumber(shipment.price)
+          )}
         <TextContainer marginTop="25px">
           <Flex flex="1">
             <Title>Total</Title>
           </Flex>
           <Flex flex="1">
-            <Title>505,900</Title>
+            <Title>{formatNumber(getTotal())}</Title>
           </Flex>
         </TextContainer>
         {displayButton && <MainButton onClick={onBtnClick}>{buttonText || 'Continue'}</MainButton>}

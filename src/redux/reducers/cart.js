@@ -1,6 +1,6 @@
 const initialStates = {
   amount: 10,
-  price: 500000,
+  price: 25000,
   orderID: '',
 };
 

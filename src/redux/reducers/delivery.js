@@ -23,7 +23,7 @@ function reducer(state = initialStates, action) {
       email: '',
       dropshipperName: '',
       phoneNumber: '',
-      dropShipperPhoneNumber: '',
+      dropshipperPhoneNumber: '',
       address: '',
       sendAsDropshipper: '',
     }),

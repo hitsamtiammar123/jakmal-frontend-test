@@ -2,19 +2,19 @@ export const SHIPMENT_LIST = [
   {
     id: 1,
     name: 'GO-SEND',
-    price: '15,000',
+    price: 15000,
     estimate: 'today',
   },
   {
     id: 2,
     name: 'JNE',
-    price: '9,000',
+    price: 9000,
     estimate: '2 days',
   },
   {
     id: 3,
     name: 'Personal Courier',
-    price: '29,000',
+    price: 29000,
     estimate: '1 day',
   },
 ];

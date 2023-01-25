@@ -116,6 +116,7 @@ export default function Delivery() {
         </form>
       </MainContent>
       <Summary
+        step={1}
         onBtnClick={() => {
           formRef.current.click();
         }}

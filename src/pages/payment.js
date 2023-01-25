@@ -6,7 +6,9 @@ import { Flex, Title, MainContent } from 'src/components';
 import { Summary, MainContainer } from 'src/shared';
 import { PaymentButton } from 'src/inputs';
 import { actions } from 'src/redux/reducers/payment';
+import { actions as cartActions } from 'src/redux/reducers/cart';
 import { PAYMENT_LIST, SHIPMENT_LIST } from 'src/constants';
+import { formatNumber } from 'src/shared/utils';
 
 const Container = styled(Flex)`
   margin-bottom: 60px;
@@ -25,6 +27,14 @@ export default function Payment() {
   const [currShipment, setCurrShipment] = useState(paymentStates.shipment.shipmentIndex);
   const [currPayment, setCurrPayment] = useState(paymentStates.payment.paymentIndex);
 
+  function generateDigit() {
+    const LIST_NUM = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    return Array(5)
+      .fill('')
+      .map(() => LIST_NUM[Math.floor(Math.random() * LIST_NUM.length)])
+      .join('');
+  }
+
   function onSubmit() {
     if (currShipment === -1) {
       alert('Please select shipment');
@@ -34,7 +44,6 @@ export default function Payment() {
     const shipment = SHIPMENT_LIST.find((item) => item.id === currShipment);
     const payment = PAYMENT_LIST.find((item) => item.id === currPayment);
 
-    console.log({ shipment, payment, currShipment, currPayment });
     dispatch(
       actions.setShipmentData({
         name: shipment.name,
@@ -49,6 +58,7 @@ export default function Payment() {
         paymentIndex: currPayment,
       })
     );
+    dispatch(cartActions.setOrderId(generateDigit()));
     navigate('/finish');
   }
 
@@ -63,7 +73,7 @@ export default function Payment() {
                 isActive={item.id === currShipment}
                 key={item.id}
                 title={item.name}
-                description={item.price}
+                description={formatNumber(item.price)}
                 onClick={() => setCurrShipment(item.id)}
               />
             ))}
@@ -84,7 +94,7 @@ export default function Payment() {
           </ButtonContainer>
         </Container>
       </MainContent>
-      <Summary onBtnClick={onSubmit} displayButton buttonText="Pay with e-wallet" />
+      <Summary step={2} onBtnClick={onSubmit} displayButton buttonText="Pay with e-wallet" />
     </MainContainer>
   );
 }
