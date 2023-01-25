@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import { Flex, Title, MainContent } from 'src/components';
 import { Summary, MainContainer } from 'src/shared';
 import { PaymentButton } from 'src/inputs';
+import { actions } from 'src/redux/reducers/payment';
 import { PAYMENT_LIST, SHIPMENT_LIST } from 'src/constants';
 
 const Container = styled(Flex)`
@@ -18,8 +20,37 @@ const ButtonContainer = styled(Flex).attrs({
 
 export default function Payment() {
   const navigate = useNavigate();
-  const [currShipment, setCurrShipment] = useState(-1);
-  const [currPayment, setCurrPayment] = useState(-1);
+  const paymentStates = useSelector((state) => state.payment);
+  const dispatch = useDispatch();
+  const [currShipment, setCurrShipment] = useState(paymentStates.shipment.shipmentIndex);
+  const [currPayment, setCurrPayment] = useState(paymentStates.payment.paymentIndex);
+
+  function onSubmit() {
+    if (currShipment === -1) {
+      alert('Please select shipment');
+    } else if (currPayment === -1) {
+      alert('Please select payment');
+    }
+    const shipment = SHIPMENT_LIST.find((item) => item.id === currShipment);
+    const payment = PAYMENT_LIST.find((item) => item.id === currPayment);
+
+    console.log({ shipment, payment, currShipment, currPayment });
+    dispatch(
+      actions.setShipmentData({
+        name: shipment.name,
+        price: shipment.price,
+        estimate: shipment.estimate,
+        shipmentIndex: currShipment,
+      })
+    );
+    dispatch(
+      actions.setPaymentData({
+        name: payment.name,
+        paymentIndex: currPayment,
+      })
+    );
+    navigate('/finish');
+  }
 
   return (
     <MainContainer backButtonText="Back to delivery" activeIndex={2}>
@@ -53,11 +84,7 @@ export default function Payment() {
           </ButtonContainer>
         </Container>
       </MainContent>
-      <Summary
-        onBtnClick={() => navigate('/finish')}
-        displayButton
-        buttonText="Pay with e-wallet"
-      />
+      <Summary onBtnClick={onSubmit} displayButton buttonText="Pay with e-wallet" />
     </MainContainer>
   );
 }
