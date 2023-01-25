@@ -131,7 +131,6 @@ export default function Summary({ buttonText, onBtnClick, displayButton, step })
   }
 
   function getTotal() {
-    console.log({ shipment, cartStates });
     return cartStates.price + getDropshipFee() + shipment.price;
   }
 
