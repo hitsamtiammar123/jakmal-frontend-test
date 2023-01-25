@@ -43,6 +43,11 @@ const InputPlaceholder = styled(Text)`
 
 const Container = styled(Flex)`
   font-family: 'Inter';
+
+  &.disabled {
+    opacity: 0.4 !important;
+    border: 1px solid gray;
+  }
 `;
 
 const REGISTERED_INPUTS = [];
@@ -55,6 +60,7 @@ export default function ({
   control,
   name,
   onChange,
+  disabled,
   ...props
 }) {
   const [isFocused, setIsFocused] = useState(false);
@@ -136,6 +142,7 @@ export default function ({
       border={getBorder()}
       onClick={onContainerFocus}
       width="100%"
+      className={disabled && 'disabled'}
       {...props}
     >
       <Flex width="100%" direction="row">
@@ -160,6 +167,7 @@ export default function ({
                   }}
                   onBlur={onBlur}
                   onFocus={onFocus}
+                  disabled={disabled}
                 />
               );
             }}
@@ -182,6 +190,7 @@ export default function ({
                   ref={input}
                   onBlur={onBlur}
                   onFocus={onFocus}
+                  disabled={disabled}
                 />
               );
             }}

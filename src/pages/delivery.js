@@ -62,7 +62,18 @@ export default function Delivery() {
   });
 
   function onSubmit(d) {
-    dispatch(actions.setValues({ ...d, sendAsDropshipper: isDropship }));
+    dispatch(
+      actions.setValues({
+        ...d,
+        sendAsDropshipper: isDropship,
+        ...(isDropship
+          ? {}
+          : {
+              dropshipperName: '',
+              dropshipperPhoneNumber: '',
+            }),
+      })
+    );
     navigate('/payment');
   }
 
@@ -124,6 +135,7 @@ export default function Delivery() {
               <InputText
                 control={control}
                 name="dropshipperName"
+                disabled={!isDropship}
                 placeholder="Dropshipper name"
                 type={!errors.dropshipperName ? 'success' : 'error'}
               />
@@ -131,6 +143,7 @@ export default function Delivery() {
                 control={control}
                 name="dropshipperPhoneNumber"
                 placeholder="Dropshipper phone number"
+                disabled={!isDropship}
                 rules={{
                   required: 'Phone number must be filled',
                   pattern: /^\+?\d+$/,
